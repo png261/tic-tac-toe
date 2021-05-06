@@ -18,11 +18,11 @@
     const $turn = $playSection.querySelector('.players');
     const $resultBtn = $resultSection.querySelectorAll('.btn');
     const $choseModeBtn = $$('.chose-mode .btn');
-
+    
     let isXTurn = true;
     let isActiveBot;
     let winner;
-    const movesWin = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+    const combinationsWin = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
     let xPos = [];
     let oPos = [];
 
@@ -38,7 +38,7 @@
     }
 
     function handleWinner() {
-        movesWin.map(moves => {
+        combinationsWin.map(moves => {
             const isXWin = moves.every(move => xPos.includes(move));
             const isOWin = moves.every(move => oPos.includes(move));
 
@@ -53,7 +53,7 @@
     function botMove() { 
         function botOneMoveWin() { 
             // 1 move bot wins
-            let moves = movesWin.map(moves => moves.filter(move => !oPos.includes(move))).filter(moves => moves.length == 1);
+            let moves = combinationsWin.map(moves => moves.filter(move => !oPos.includes(move))).filter(moves => moves.length == 1);
 
             if(moves != '') moves = moves.reduce((moves,move) => [...moves,...move]).filter(move => !xPos.includes(move));
             if(moves == '') return false;
@@ -63,7 +63,7 @@
         
         function botMovePreventPlayerWin() { 
             // 1 move player wins
-            let moves = movesWin.map(moves => moves.filter(move => !xPos.includes(move))).filter(moves => moves.length == 1);
+            let moves = combinationsWin.map(moves => moves.filter(move => !xPos.includes(move))).filter(moves => moves.length == 1);
 
             if(moves != '') moves = moves.reduce((moves,move) => [...moves,...move]).filter(move => !oPos.includes(move));
             if(moves == '') return false;
@@ -74,7 +74,7 @@
         function botMoveRandom() { 
             const boxPos = [0, 1, 2, 3, 4, 5, 6, 7, 8];
             // 2 move bot wins
-            let moves = movesWin.map(moves => moves.filter(move => !oPos.includes(move))).filter(moves => moves.length == 2);
+            let moves = combinationsWin.map(moves => moves.filter(move => !oPos.includes(move))).filter(moves => moves.length == 2);
 
             if(moves != '') moves = moves.reduce((moves,move) => [...moves,...move]).filter(move => !xPos.includes(move));
             // move random
