@@ -55,10 +55,9 @@
             // 1 move bot wins
             let moves = movesWin.map(moves => moves.filter(move => !oPos.includes(move))).filter(moves => moves.length == 1);
 
-            const isMovesEmpty = moves == '';
-            if(!isMovesEmpty) moves = moves.reduce((moves,move) => [...moves,...move]).filter(move => !xPos.includes(move));
+            if(moves != '') moves = moves.reduce((moves,move) => [...moves,...move]).filter(move => !xPos.includes(move));
+            if(moves == '') return false;
 
-            if(isMovesEmpty) return false;
             return moves;
         }
         
@@ -66,10 +65,9 @@
             // 1 move player wins
             let moves = movesWin.map(moves => moves.filter(move => !xPos.includes(move))).filter(moves => moves.length == 1);
 
-            const isMovesEmpty = moves == '';
-            if(!isMovesEmpty) moves = moves.reduce((moves,move) => [...moves,...move]).filter(move => !oPos.includes(move));
+            if(moves != '') moves = moves.reduce((moves,move) => [...moves,...move]).filter(move => !oPos.includes(move));
+            if(moves == '') return false;
 
-            if(isMovesEmpty) return false;
             return moves;
         }
         
@@ -78,17 +76,16 @@
             // 2 move bot wins
             let moves = movesWin.map(moves => moves.filter(move => !oPos.includes(move))).filter(moves => moves.length == 2);
 
-            const isMovesEmpty = moves == '';
-            if(!isMovesEmpty) moves = moves.reduce((moves,move) => [...moves,...move]).filter(move => !xPos.includes(move));
-             // move random
-            if (isMovesEmpty) moves = boxPos.filter(Pos => !xPos.includes(Pos) && !oPos.includes(Pos));
+            if(moves != '') moves = moves.reduce((moves,move) => [...moves,...move]).filter(move => !xPos.includes(move));
+            // move random
+            if (moves == '') moves = boxPos.filter(Pos => !xPos.includes(Pos) && !oPos.includes(Pos));
 
             return moves;
         }
        
         const movesArr = botOneMoveWin() || botMovePreventPlayerWin() || botMoveRandom();
-        const randomIndex = Math.floor(Math.random() * movesArr.length);
-        const movePos = movesArr[randomIndex] + 1;
+        const randomNum = Math.floor(Math.random() * movesArr.length);
+        const movePos = movesArr[randomNum] + 1;
 
         return movePos;
     }
