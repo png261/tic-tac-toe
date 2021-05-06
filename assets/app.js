@@ -13,7 +13,7 @@
     const $playSection = $('#play');
     const $resultSection = $('#result');
 
-    const $boardBox = $playSection.querySelectorAll('.board > div');
+    const $cells = $playSection.querySelectorAll('.board > div');
     const $resultText = $resultSection.querySelector('.result-text');
     const $turn = $playSection.querySelector('.players');
     const $resultBtn = $resultSection.querySelectorAll('.btn');
@@ -26,9 +26,9 @@
     let xPos = [];
     let oPos = [];
 
-    function transferToSection($box) {
+    function transferToSection($cell) {
         $sections.forEach($section => $section.classList.add('hide'));
-        $box.classList.remove('hide');
+        $cell.classList.remove('hide');
     }
 
     function handleResult() {
@@ -102,18 +102,18 @@
         }, 500)
     }
 
-    function handleMove($box) {
+    function handleMove($cell) {
         const boxClass = isXTurn ? 'x' : 'o';
-        $box.classList = boxClass;
+        $cell.classList = boxClass;
         
         if (isXTurn) $turn.classList.add('x');
         else $turn.classList.remove('x'); 
 
         xPos = [];
         oPos = [];
-        $boardBox.forEach(($box, Pos) => {
-            if ($box.classList == 'x') xPos.push(Pos);
-            if ($box.classList == 'o') oPos.push(Pos);
+        $cells.forEach(($cell, Pos) => {
+            if ($cell.classList == 'x') xPos.push(Pos);
+            if ($cell.classList == 'o') oPos.push(Pos);
         })
         isXTurn = !isXTurn;
 
@@ -133,14 +133,14 @@
         winner = '';
         $turn.classList.remove('x');
         $playSection.classList.remove('bot-turn');
-        $boardBox.forEach($box => $box.classList = '')
+        $cells.forEach($cell => $cell.classList = '')
         transferToSection($playSection);
     }
 
     function handleEvent() {
         $resultBtn.forEach(btn => btn.addEventListener('click', resetGame));
         $choseModeBtn.forEach(btn => btn.addEventListener('click', handleMode));
-        $boardBox.forEach(box => box.onclick = function () {
+        $cells.forEach(box => box.onclick = function () {
             handleMove(this);
             if (isActiveBot) bot();
         })
